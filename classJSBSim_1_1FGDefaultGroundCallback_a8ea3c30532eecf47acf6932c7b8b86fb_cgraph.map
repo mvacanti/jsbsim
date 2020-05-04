@@ -1,0 +1,5 @@
+<map id="GetAGLevel" name="GetAGLevel">
+<area shape="rect" id="node2" href="$classJSBSim_1_1FGColumnVector3.html#acc6f47d7e6daf06690b60f6df00c8264" title="Normalize. " alt="" coords="151,5,341,47"/>
+<area shape="rect" id="node3" href="$classJSBSim_1_1FGLocation.html#a3f3f67b03ed439bd572208afa1a737b5" title="Get the distance from the center of the earth. " alt="" coords="173,71,319,112"/>
+<area shape="rect" id="node4" href="$classJSBSim_1_1FGLocation.html#a0697137d8c02a8b84f695d12317347a6" title="Sets the semimajor and semiminor axis lengths for this planet. " alt="" coords="173,136,319,177"/>
+</map>

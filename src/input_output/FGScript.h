@@ -184,7 +184,7 @@ public:
                       one present in the script.
       @return true if successful */
   bool LoadScript(const SGPath& script, double default_dT,
-                  const SGPath& initfile);
+                  const SGPath& initfile, bool addScriptModelToPath);
 
   /** This function is called each pass through the executive Run() method IF
       scripting is enabled.

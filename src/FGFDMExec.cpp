@@ -648,12 +648,12 @@ vector <string> FGFDMExec::EnumerateFDMs(void)
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 bool FGFDMExec::LoadScript(const SGPath& script, double deltaT,
-                           const SGPath& initfile)
+                           const SGPath& initfile, bool addScriptModelToPath)
 {
   bool result;
 
   Script = new FGScript(this);
-  result = Script->LoadScript(GetFullPath(script), deltaT, initfile);
+  result = Script->LoadScript(GetFullPath(script), deltaT, initfile, addScriptModelToPath);
 
   return result;
 }

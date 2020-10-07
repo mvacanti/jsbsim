@@ -294,7 +294,7 @@ public:
                       is not given in either place, an error will result.
       @return true if successfully loads; false otherwise. */
   bool LoadScript(const SGPath& Script, double deltaT=0.0,
-                  const SGPath& initfile=SGPath());
+                  const SGPath& initfile=SGPath(), bool addScriptModelToPath = true);
 
   /** Sets the path to the engine config file directories.
       @param path path to the directory under which engine config

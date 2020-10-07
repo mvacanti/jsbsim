@@ -89,7 +89,7 @@ FGScript::~FGScript()
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 bool FGScript::LoadScript(const SGPath& script, double default_dT,
-                          const SGPath& initfile)
+                          const SGPath& initfile, bool addScriptModelToPath)
 {
   SGPath initialize;
   string aircraft="", prop_name="";
@@ -157,8 +157,13 @@ bool FGScript::LoadScript(const SGPath& script, double default_dT,
   if (element) {
     aircraft = element->GetAttributeValue("aircraft");
     if (!aircraft.empty()) {
-      if (!FDMExec->LoadModel(aircraft))
-        return false;
+      if (addScriptModelToPath) {
+        if (!FDMExec->LoadModel(aircraft))
+          return false;
+      } else {
+        if (!FDMExec->LoadModel(aircraft, false))
+          return false;
+          }
     } else {
       cerr << "Aircraft must be specified in use element." << endl;
       return false;

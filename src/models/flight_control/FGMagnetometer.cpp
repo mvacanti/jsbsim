@@ -98,7 +98,7 @@ FGMagnetometer::~FGMagnetometer()
 void FGMagnetometer::updateInertialMag(void)
 {
   counter++;
-  if (counter > INERTIAL_UPDATE_RATE)//dont need to update every iteration
+  if (counter > INERTIAL_UPDATE_RATE || startup == true)//dont need to update every iteration
   {
     counter = 0;
 
@@ -108,6 +108,7 @@ void FGMagnetometer::updateInertialMag(void)
 
     //this should be done whenever the position changes significantly (in nTesla)
     calc_magvar( usedLat, usedLon, usedAlt, date, field );
+    startup = false
   }
 }
 

@@ -139,6 +139,7 @@ private:
   unsigned long int date;
   unsigned int counter;
   const unsigned int INERTIAL_UPDATE_RATE;
+  bool startup;
 
   void Debug(int from) override;
 };

@@ -851,6 +851,7 @@
             </function>
         </axis>
     </aerodynamics>
+    <system file="px4_default_mag_sensor"/>
 
     <!-- 41 properties output, + 1 for the time stamp -->
  <!--output name="localhost" type="SOCKET" port="5138" protocol="UDP" rate="10">

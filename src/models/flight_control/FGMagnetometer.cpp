@@ -98,8 +98,7 @@ FGMagnetometer::~FGMagnetometer()
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 void FGMagnetometer::updateInertialMag(void)
 {
-  counter++;
-  if (counter > INERTIAL_UPDATE_RATE || fcs->GetExec()->GetSimTime() < 1 )//dont need to update every iteration
+  if (counter++ % INERTIAL_UPDATE_RATE == 0)//dont need to update every iteration
   {
     counter = 0;
     usedLat = (Propagate->GetGeodLatitudeRad());//radians, N and E lat and long are positive, S and W negative

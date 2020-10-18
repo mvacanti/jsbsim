@@ -3,7 +3,7 @@
 <fdm_config name="737" release="BETA" version="2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
-    
+
     <fileheader>
         <author> Dave Culp </author>
         <author> Aeromatic </author>
@@ -115,7 +115,7 @@
             <spring_coeff unit="LBS/FT"> 120000 </spring_coeff>
             <damping_coeff unit="LBS/FT/SEC"> 10000 </damping_coeff>
             <damping_coeff_rebound unit="LBS/FT/SEC">20000</damping_coeff_rebound>
-            
+
             <max_steer unit="DEG"> 0.0 </max_steer>
             <brake_group> RIGHT </brake_group>
             <retractable>1</retractable>
@@ -851,11 +851,10 @@
             </function>
         </axis>
     </aerodynamics>
-    <system file="px4_default_mag_sensor"/>
 
     <!-- 41 properties output, + 1 for the time stamp -->
  <!--output name="localhost" type="SOCKET" port="5138" protocol="UDP" rate="10">
-   
+
   <property> velocities/vc-kts </property>
   <property> position/h-sl-ft </property>
   <property> attitude/theta-deg </property>
@@ -866,7 +865,6 @@
   <property> attitude/psi-deg </property>
   <property> aero/alpha-deg </property>
   <property> velocities/p-rad_sec </property>
-
   <property> velocities/q-rad_sec </property>
   <property> velocities/r-rad_sec </property>
   <property> velocities/vtrue-kts </property>
@@ -877,7 +875,6 @@
   <property> velocities/u-fps </property>
   <property> velocities/v-fps </property>
   <property> velocities/w-fps </property>
-
   <property> position/h-agl-ft </property>
   <property> position/lat-gc-deg </property>
   <property> position/long-gc-deg </property>
@@ -888,7 +885,6 @@
   <property> propulsion/engine[1]/n1 </property>
   <property> propulsion/engine[0]/n2 </property>
   <property> propulsion/engine[1]/n2 </property>
-
   <property> propulsion/engine[0]/fuel-flow-rate-pps </property>
   <property> propulsion/engine[1]/fuel-flow-rate-pps </property>
   <property> propulsion/total-fuel-lbs </property>
@@ -899,23 +895,28 @@
   <property> fcs/speedbrake-pos-norm </property>
   <property> fcs/right-aileron-pos-norm </property>
   <property> fcs/elevator-pos-norm </property>
-  
+
   <property> fcs/rudder-pos-norm </property>
-  
+
  </output-->
 
+  <output name="737_MAG.csv" type="CSV" rate="100">
+    <property> px4/mag-x </property>
+    <property> px4/mag-y </property>
+    <property> px4/mag-z </property>
+  </output>
+
  <!-- this is the telnet interface -->
- <input port="5137" /> 
- 
+ <input port="5137" />
+
  <!-- 6 properties input, + 1 for the time stamp -->
  <input port="5139" type="QTJSBSIM" rate="20">
-  <property> fcs/aileron-cmd-norm </property> 
-  <property> fcs/elevator-cmd-norm </property> 
-  <property> fcs/rudder-cmd-norm </property> 
-  <property> fcs/throttle-cmd-norm[0] </property> 
+  <property> fcs/aileron-cmd-norm </property>
+  <property> fcs/elevator-cmd-norm </property>
+  <property> fcs/rudder-cmd-norm </property>
+  <property> fcs/throttle-cmd-norm[0] </property>
   <property> fcs/throttle-cmd-norm[1] </property>
-  <property> simulation/terminate </property> 
- </input>  
+  <property> simulation/terminate </property>
+ </input>
 
 </fdm_config>
-

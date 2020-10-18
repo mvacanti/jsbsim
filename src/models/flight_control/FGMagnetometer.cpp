@@ -41,6 +41,7 @@ INCLUDES
 #include "simgear/magvar/coremag.hxx"
 #include "models/FGFCS.h"
 #include "models/FGMassBalance.h"
+#include "FGFDMExec.h"
 
 using namespace std;
 
@@ -91,24 +92,22 @@ FGMagnetometer::FGMagnetometer(FGFCS* fcs, Element* element)
 
 FGMagnetometer::~FGMagnetometer()
 {
-  Debug(1);
+  Debug(4);
 }
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 void FGMagnetometer::updateInertialMag(void)
 {
   counter++;
-  if (counter > INERTIAL_UPDATE_RATE || startup == true)//dont need to update every iteration
+  if (counter > INERTIAL_UPDATE_RATE || fcs->GetExec()->GetSimTime() < 1 )//dont need to update every iteration
   {
     counter = 0;
-
     usedLat = (Propagate->GetGeodLatitudeRad());//radians, N and E lat and long are positive, S and W negative
     usedLon = (Propagate->GetLongitude());//radians
     usedAlt = (Propagate->GetGeodeticAltitude()*fttom*0.001);//km
 
     //this should be done whenever the position changes significantly (in nTesla)
     calc_magvar( usedLat, usedLon, usedAlt, date, field );
-    startup = false
   }
 }
 

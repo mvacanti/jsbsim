@@ -1,39 +1,23 @@
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- Module:       FGElectric.cpp
- Author:       David Culp
- Date started: 04/07/2004
+ Module:       FGBldc.cpp
+ Author:       Matt Vacanti
+ Date started: 11/08/2020
  Purpose:      This module models an electric motor
 
- --------- Copyright (C) 2004  David Culp (davidculp2@comcast.net) -------------
+ --------- Copyright (C) 2020  Matt Vacanti -------------
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU Lesser General Public License as published by the Free Software
- Foundation; either version 2 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT
- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
- details.
-
- You should have received a copy of the GNU Lesser General Public License along with
- this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- Place - Suite 330, Boston, MA  02111-1307, USA.
-
- Further information about the GNU Lesser General Public License can also be found on
- the world wide web at http://www.gnu.org.
+UPDATE LICENSE
 
 FUNCTIONAL DESCRIPTION
 --------------------------------------------------------------------------------
 
-This class descends from the FGEngine class and models an electric motor based on
-parameters given in the engine config file for this class
+UPDATE FUNCTIONAL DESCRIPTION
 
 HISTORY
 --------------------------------------------------------------------------------
-04/07/2004  DPC  Created
-01/06/2005  DPC  Converted to new XML format
+11/08/2020  MDV  Created
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 INCLUDES
@@ -43,7 +27,7 @@ INCLUDES
 #include <sstream>
 
 #include "FGFDMExec.h"
-#include "FGElectric.h"
+#include "FGBldc.h"
 #include "FGPropeller.h"
 #include "input_output/FGXMLElement.h"
 
@@ -55,7 +39,7 @@ namespace JSBSim {
 CLASS IMPLEMENTATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
-FGElectric::FGElectric(FGFDMExec* exec, Element *el, int engine_number, struct FGEngine::Inputs& input)
+FGBldc::FGBldc(FGFDMExec* exec, Element *el, int engine_number, struct FGEngine::Inputs& input)
   : FGEngine(engine_number, input)
 {
   Load(exec,el);
@@ -64,8 +48,19 @@ FGElectric::FGElectric(FGFDMExec* exec, Element *el, int engine_number, struct F
   PowerWatts = 745.7;
   hptowatts = 745.7;
 
-  if (el->FindElement("power"))
-    PowerWatts = el->FindElementValueAsNumberConvertTo("power","WATTS");
+  if (el->FindElement("maxcurrent"))
+    MaxCurrent= el->FindElementValueAsNumber("maxcurrent");
+
+  if (el->FindElement("maxvolts"))
+    MaxVolts= el->FindElementValueAsNumber("maxvolts");
+
+  if (el->FindElement("velocityconstant"))
+    VelocityConstant= el->FindElementValueAsNumber("velocityconstant");
+
+  if (el->FindElement("torqueconstant"))
+    TorqueConstant= el->FindElementValueAsNumber("torqueconstant");
+
+  PowerWatts = MaxCurrent * MaxVolts;
 
   string base_property_name = CreateIndexedPropertyName("propulsion/engine",
                                                         EngineNumber);
@@ -76,42 +71,59 @@ FGElectric::FGElectric(FGFDMExec* exec, Element *el, int engine_number, struct F
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-FGElectric::~FGElectric()
+FGBldc::~FGBldc()
 {
   Debug(1); // Call Debug() routine from constructor if needed
 }
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-void FGElectric::Calculate(void)
+void FGBldc::Calculate(void)
 {
   RunPreFunctions();
 
   if (Thruster->GetType() == FGThruster::ttPropeller) {
     ((FGPropeller*)Thruster)->SetAdvance(in.PropAdvance[EngineNumber]);
     ((FGPropeller*)Thruster)->SetFeather(in.PropFeather[EngineNumber]);
-  } 
+  }
 
   RPM = Thruster->GetRPM() * Thruster->GetGearRatio();
 
-  HP = PowerWatts * in.ThrottlePos[EngineNumber] / hptowatts;
-  
+  V = MaxVolts * in.ThrottlePos[EngineNumber];
+  CommandedRPM = V * VelocityConstant;
+  DeltaRPM = CommandedRPM - RPM;
+
+  TorqueRequired = abs(((FGPropeller*)Thruster)->GetTorque());
+  CurrentRequired = (TorqueRequired * VelocityConstant) / TorqueConstant;
+  MaxTorque = (TorqueConstant * MaxCurrent) / VelocityConstant;
+  TorqueAvailable = MaxTorque - TorqueRequired;
+
+  if (DeltaRPM >= 0){
+    TargetTorque = min((((DeltaRPM/60)*(2.0 * M_PI))/(max(0.00001, in.TotalDeltaT))) * ((FGPropeller*)Thruster)->GetIxx(),
+                                                                                                  TorqueAvailable);
+  } else {
+    TargetTorque = abs(min((((DeltaRPM/60)*(2.0 * M_PI))/(max(0.00001, in.TotalDeltaT))) * ((FGPropeller*)Thruster)->GetIxx(),
+                                                                  abs(((FGPropeller*)Thruster)->GetTorque()))) * -1;
+  }
+
+  EnginePower = ((2 * M_PI) * RPM * (TorqueRequired + TargetTorque)) / 60;
+
   LoadThrusterInputs();
-  Thruster->Calculate(HP * hptoftlbssec, -1);
+  Thruster->Calculate(EnginePower, TargetTorque);
 
   RunPostFunctions();
 }
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-double FGElectric::CalcFuelNeed(void)
+double FGBldc::CalcFuelNeed(void)
 {
   return 0;
 }
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-string FGElectric::GetEngineLabels(const string& delimiter)
+string FGBldc::GetEngineLabels(const string& delimiter)
 {
   std::ostringstream buf;
 
@@ -123,7 +135,7 @@ string FGElectric::GetEngineLabels(const string& delimiter)
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-string FGElectric::GetEngineValues(const string& delimiter)
+string FGBldc::GetEngineValues(const string& delimiter)
 {
   std::ostringstream buf;
 
@@ -153,7 +165,7 @@ string FGElectric::GetEngineValues(const string& delimiter)
 //    16: When set various parameters are sanity checked and
 //       a message is printed out when they go out of bounds
 
-void FGElectric::Debug(int from)
+void FGBldc::Debug(int from)
 {
   if (debug_lvl <= 0) return;
 
@@ -166,8 +178,8 @@ void FGElectric::Debug(int from)
     }
   }
   if (debug_lvl & 2 ) { // Instantiation/Destruction notification
-    if (from == 0) cout << "Instantiated: FGElectric" << endl;
-    if (from == 1) cout << "Destroyed:    FGElectric" << endl;
+    if (from == 0) cout << "Instantiated: FGBldc" << endl;
+    if (from == 1) cout << "Destroyed:    FGBldc" << endl;
   }
   if (debug_lvl & 4 ) { // Run() method entry print for FGModel-derived objects
   }

@@ -34,7 +34,22 @@
       <event name="Throttle-up">
       <description>Move throttle to full for take-off.</description>
       <condition>simulation/sim-time-sec  ge  10.0</condition>
-      <set name="fcs/throttle-cmd-norm[0]" value="1.0" action="FG_RAMP" tc="10.0"/>
+      <!--<set name="fcs/throttle-cmd-norm[0]" value="1.0" action="FG_RAMP" tc="10.0"/>-->
+	  <set name="fcs/throttle-cmd-norm[0]" value="1.0"/>
+      </event>
+
+	  <event name="Throttle-down">
+      <description>Move throttle to full for take-off.</description>
+      <condition>simulation/sim-time-sec  ge  30.0</condition>
+      <!--<set name="fcs/throttle-cmd-norm[0]" value="1.0" action="FG_RAMP" tc="10.0"/>-->
+	  <set name="fcs/throttle-cmd-norm[0]" value="0.5"/>
+      </event>
+
+	  <event name="Throttle-up">
+      <description>Move throttle to full for take-off.</description>
+      <condition>simulation/sim-time-sec  ge  60.0</condition>
+      <!--<set name="fcs/throttle-cmd-norm[0]" value="1.0" action="FG_RAMP" tc="10.0"/>-->
+	  <set name="fcs/throttle-cmd-norm[0]" value="0.65"/>
       </event>
       
   </run>

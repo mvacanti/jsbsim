@@ -291,7 +291,7 @@ void FGTurboProp::Calculate(void)
   }
  
   LoadThrusterInputs();
-  Thruster->Calculate(HP * hptoftlbssec);
+  Thruster->Calculate(HP * hptoftlbssec, -1);
 
   RunPostFunctions();
 }

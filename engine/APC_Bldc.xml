@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+  File:     APCBldc.xml
+  Author:   Matt Vacanti
+-->
+<bldc_engine name="bldc_electric">
+ <velocityconstant> 800 </velocityconstant>
+ <torqueconstant> 8.3 </torqueconstant>
+ <maxcurrent> 33.269 </maxcurrent>
+ <maxvolts> 10 </maxvolts>
+</bldc_engine>

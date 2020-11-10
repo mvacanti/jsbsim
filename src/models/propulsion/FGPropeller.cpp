@@ -198,7 +198,7 @@ void FGPropeller::ResetToIC(void)
 //
 // Because RPM could be zero, we need to be creative about what RPM is stated as.
 
-double FGPropeller::Calculate(double EnginePower)
+double FGPropeller::Calculate(double EnginePower, double EngineTorque)
 {
   FGColumnVector3 localAeroVel = Transform().Transposed() * in.AeroUVW;
   double omega, PowerAvailable;
@@ -269,9 +269,12 @@ double FGPropeller::Calculate(double EnginePower)
   // FGForce::GetBodyForces() function.
 
   FGColumnVector3 vH(Ixx*omega*Sense*Sense_multiplier, 0.0, 0.0);
-
-  if (omega > 0.0) ExcessTorque = PowerAvailable / omega;
-  else             ExcessTorque = PowerAvailable / 1.0;
+  if (EngineTorque == -1) {
+    if (omega > 0.0) ExcessTorque = PowerAvailable / omega;
+    else             ExcessTorque = PowerAvailable / 1.0;
+  } else {
+    ExcessTorque = EngineTorque;
+  }
 
   RPM = (RPS + ((ExcessTorque / Ixx) / (2.0 * M_PI)) * in.TotalDeltaT) * 60.0;
 
@@ -347,10 +350,10 @@ double FGPropeller::GetPowerRequired(void)
 
   double RPS = RPM / 60.0;
   double local_RPS = RPS < 0.01 ? 0.01 : RPS; 
-
+/////
   PowerRequired = cPReq*local_RPS*local_RPS*local_RPS*D5*in.Density;
   vTorque(eX) = -Sense*PowerRequired / (local_RPS*2.0*M_PI);
-
+/////
   return PowerRequired;
 }
 

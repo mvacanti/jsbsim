@@ -418,13 +418,11 @@ bool FGPropulsion::Load(Element* el)
         if (!IsBound) bind();
         Element *element = engine_element->FindElement("rocket_engine");
         Engines.push_back(new FGRocket(FDMExec, element, numEngines, in));
-
       } else if (engine_element->FindElement("electric_engine")) {
         HaveElectricEngine = true;
         if (!IsBound) bind();
         Element *element = engine_element->FindElement("electric_engine");
         Engines.push_back(new FGElectric(FDMExec, element, numEngines, in));
-
       } else if (engine_element->FindElement("bldc_engine")) {
         HaveBldcEngine = true;
         if (!IsBound) bind();

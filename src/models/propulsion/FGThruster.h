@@ -84,7 +84,7 @@ public:
 
   enum eType {ttNozzle, ttRotor, ttPropeller, ttDirect};
 
-  virtual double Calculate(double tt, double tq) {
+  virtual double Calculate(double tt) {
        Thrust = cos(ReverserAngle)*tt;
        vFn(1) = Thrust;
        return Thrust;

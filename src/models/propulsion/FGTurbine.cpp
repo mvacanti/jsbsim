@@ -177,7 +177,7 @@ void FGTurbine::Calculate(void)
     default: thrust = Off();
   }
 
-  Thruster->Calculate(thrust, -1); // allow thruster to modify thrust (i.e. reversing)
+  Thruster->Calculate(thrust); // allow thruster to modify thrust (i.e. reversing)
 
   RunPostFunctions();
 }

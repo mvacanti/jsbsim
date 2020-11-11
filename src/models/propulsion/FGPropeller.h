@@ -276,7 +276,7 @@ public:
       accelerate the prop. It could be negative, dictating that the propeller
       would be slowed.
       @return the thrust in pounds */
-  double Calculate(double EnginePower, double EngineTorque);
+  double Calculate(double EnginePower);
   /// Retrieves the P-Factor constant
   FGColumnVector3 GetPFactor(void) const;
   /// Generate the labels for the thruster standard CSV output

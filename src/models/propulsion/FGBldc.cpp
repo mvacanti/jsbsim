@@ -88,6 +88,7 @@ void FGBldc::Calculate(void)
   }
 
   RPM = Thruster->GetRPM() * Thruster->GetGearRatio();
+  //TODO Check if this method still holds together for a gear drive.
 
   V = MaxVolts * in.ThrottlePos[EngineNumber];
   CommandedRPM = V * VelocityConstant;
@@ -99,17 +100,17 @@ void FGBldc::Calculate(void)
   TorqueAvailable = MaxTorque - TorqueRequired;
 
   if (DeltaRPM >= 0){
-    TargetTorque = min((((DeltaRPM/60)*(2.0 * M_PI))/(max(0.00001, in.TotalDeltaT))) * ((FGPropeller*)Thruster)->GetIxx(),
-                                                                                                  TorqueAvailable);
+    TargetTorque = min((((DeltaRPM/60)*(2.0 * M_PI))/(max(0.00001, in.TotalDeltaT))) *
+                                                     ((FGPropeller*)Thruster)->GetIxx(), TorqueAvailable);
   } else {
-    TargetTorque = abs(min((((DeltaRPM/60)*(2.0 * M_PI))/(max(0.00001, in.TotalDeltaT))) * ((FGPropeller*)Thruster)->GetIxx(),
-                                                                  abs(((FGPropeller*)Thruster)->GetTorque()))) * -1;
+    TargetTorque = abs(min((((DeltaRPM/60)*(2.0 * M_PI))/(max(0.00001, in.TotalDeltaT))) *
+                      ((FGPropeller*)Thruster)->GetIxx(), abs(TorqueRequired))) * -1;
   }
 
-  EnginePower = ((2 * M_PI) * RPM * (TorqueRequired + TargetTorque)) / 60;
+  EnginePower = ((2 * M_PI) * max(RPM, 0.0001) * (TorqueRequired + TargetTorque)) / 60;
 
   LoadThrusterInputs();
-  Thruster->Calculate(EnginePower, TargetTorque);
+  Thruster->Calculate(EnginePower);
 
   RunPostFunctions();
 }

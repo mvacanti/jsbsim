@@ -97,7 +97,7 @@ void FGElectric::Calculate(void)
   HP = PowerWatts * in.ThrottlePos[EngineNumber] / hptowatts;
   
   LoadThrusterInputs();
-  Thruster->Calculate(HP * hptoftlbssec, -1);
+  Thruster->Calculate(HP * hptoftlbssec);
 
   RunPostFunctions();
 }

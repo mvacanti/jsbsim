@@ -518,7 +518,7 @@ void FGPiston::Calculate(void)
   }
 
   LoadThrusterInputs();
-  Thruster->Calculate(HP * hptoftlbssec, -1);
+  Thruster->Calculate(HP * hptoftlbssec);
 
   RunPostFunctions();
 }

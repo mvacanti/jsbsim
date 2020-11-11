@@ -206,7 +206,7 @@ void FGRocket::Calculate(void)
   } // End thrust calculations
 
   LoadThrusterInputs();
-  It += Thruster->Calculate(VacThrust, -1) * in.TotalDeltaT;
+  It += Thruster->Calculate(VacThrust) * in.TotalDeltaT;
   ItVac += VacThrust * in.TotalDeltaT;
 
   RunPostFunctions();

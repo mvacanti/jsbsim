@@ -67,6 +67,8 @@ FGBldc::FGBldc(FGFDMExec* exec, Element *el, int engine_number, struct FGEngine:
                                                         EngineNumber);
   exec->GetPropertyManager()->Tie(base_property_name + "/power-hp", &HP);
 
+  exec->GetPropertyManager()->Tie(base_property_name + "/current-a", &CurrentRequired);
+
   Debug(0); // Call Debug() routine from constructor if needed
 }
 

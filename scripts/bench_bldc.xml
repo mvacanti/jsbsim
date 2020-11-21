@@ -16,6 +16,8 @@
 	<property>position/h-agl-ft</property>
 	<property>velocities/mach</property>  
 	<property>propulsion/engine[0]/thrust-lbs</property>
+	<property>propulsion/engine[0]/prop_torque_ftlbs</property>
+	<property>propulsion/engine/current-a</property>
 	<property>velocities/vc-kts</property>
 	<property>velocities/vc-fps</property>
 	<property>velocities/vt-fps</property>

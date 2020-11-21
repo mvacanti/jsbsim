@@ -60,6 +60,7 @@ public:
 
   void Calculate(void);
   double GetPowerAvailable(void) {return (HP * hptoftlbssec);}
+  double GetCurrentRequired(void) {return CurrentRequired;}
   double getRPM(void) {return RPM;}
   std::string GetEngineLabels(const std::string& delimiter);
   std::string GetEngineValues(const std::string& delimiter);

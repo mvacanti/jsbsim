@@ -25,6 +25,7 @@ INCLUDES
 
 #include <iostream>
 #include <sstream>
+#include <math.h>
 
 #include "FGFDMExec.h"
 #include "FGBldc.h"
@@ -87,27 +88,27 @@ void FGBldc::Calculate(void)
     ((FGPropeller*)Thruster)->SetFeather(in.PropFeather[EngineNumber]);
   }
 
-  RPM = Thruster->GetRPM() * Thruster->GetGearRatio();
-  //TODO Check if this method still holds together for a gear drive.
+  RPM = Thruster->GetRPM();
+  //TODO Add gear ratio / transmission support.
 
   V = MaxVolts * in.ThrottlePos[EngineNumber];
   CommandedRPM = V * VelocityConstant;
-  DeltaRPM = CommandedRPM - RPM;
+  DeltaRPM = round((CommandedRPM - RPM));
 
   TorqueRequired = abs(((FGPropeller*)Thruster)->GetTorque());
   CurrentRequired = (TorqueRequired * VelocityConstant) / TorqueConstant;
   MaxTorque = (TorqueConstant * MaxCurrent) / VelocityConstant;
   TorqueAvailable = MaxTorque - TorqueRequired;
+  DeltaTorque = (((DeltaRPM/60)*(2.0 * M_PI))/(max(0.00001, in.TotalDeltaT))) * ((FGPropeller*)Thruster)->GetIxx();
 
   if (DeltaRPM >= 0){
-    TargetTorque = min((((DeltaRPM/60)*(2.0 * M_PI))/(max(0.00001, in.TotalDeltaT))) *
-                                                     ((FGPropeller*)Thruster)->GetIxx(), TorqueAvailable);
+    TargetTorque = min(DeltaTorque, TorqueAvailable) + TorqueRequired;
   } else {
-    TargetTorque = abs(min((((DeltaRPM/60)*(2.0 * M_PI))/(max(0.00001, in.TotalDeltaT))) *
-                      ((FGPropeller*)Thruster)->GetIxx(), abs(TorqueRequired))) * -1;
+    TargetTorque = min(abs(DeltaTorque), TorqueRequired) * -1;
   }
 
-  EnginePower = ((2 * M_PI) * max(RPM, 0.0001) * (TorqueRequired + TargetTorque)) / 60;
+  EnginePower = ((2 * M_PI) * max(RPM, 0.0001) * TargetTorque) / 60;
+  HP = EnginePower / 550;
 
   LoadThrusterInputs();
   Thruster->Calculate(EnginePower);

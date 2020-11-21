@@ -99,7 +99,7 @@
   </ground_reactions>
   <!-- the front and rear motors spin clockwise, and the left and right motors spin counter-clockwise. -->
   <propulsion>
-    <engine file="APC_Bldc" name="PX4_1">
+    <engine file="electric_APC" name="PX4_1">
       <location unit="M">
         <x>   0.0 </x>
         <y>   0.0 </y>
@@ -111,7 +111,7 @@
         <yaw>    0.00 </yaw>
       </orient>
       <feed>0</feed>
-      <thruster file="APC">
+      <thruster file="APC_13x8E_6K">
         <location unit="M">
           <x>   0.0 </x>
           <y>   0.0 </y>

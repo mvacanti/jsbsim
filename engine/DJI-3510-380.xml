@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+  File:     APCBldc.xml
+  Author:   Matt Vacanti
+-->
+<bldc_engine name="DJI-3510-380">
+ <velocityconstant> 380 </velocityconstant>
+ <torqueconstant> 6.1217 </torqueconstant>
+ <maxcurrent> 11.979 </maxcurrent>
+ <maxvolts> 18.3 </maxvolts>
+</bldc_engine>
+
+<!--
+<bldc_engine name="DJI-3510-380">
+ <velocityconstant> 380 </velocityconstant>
+ <torqueconstant> 6.1217 </torqueconstant>
+ <maxcurrent> 8.24 </maxcurrent>
+ <maxvolts> 14.63 </maxvolts>
+</bldc_engine>
+-->

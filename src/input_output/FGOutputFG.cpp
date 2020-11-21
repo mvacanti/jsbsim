@@ -269,6 +269,7 @@ void FGOutputFG::SocketDataFill(void)
       break;
     case (FGEngine::etTurboprop):
       break;
+    // TODO Add BLDC and motor information
     case (FGEngine::etElectric):
       net1->rpm[i] = static_cast<float>(static_cast<FGElectric *>(engine)->getRPM());
       break;

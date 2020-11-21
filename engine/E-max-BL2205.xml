@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+  File:     APCBldc.xml
+  Author:   Matt Vacanti
+-->
+<!--
+<bldc_engine name="E-max-BL2205">
+ <velocityconstant> 1880 </velocityconstant>
+ <torqueconstant> 6.1217 </torqueconstant>
+ <maxcurrent> 9.6 </maxcurrent>
+ <maxvolts> 10.9 </maxvolts>
+</bldc_engine>
+-->
+
+<bldc_engine name="E-max-BL2205">
+ <velocityconstant> 1880 </velocityconstant>
+ <torqueconstant> 6.1217 </torqueconstant>
+ <maxcurrent> 8.4 </maxcurrent>
+ <maxvolts> 9.9 </maxvolts>
+</bldc_engine>

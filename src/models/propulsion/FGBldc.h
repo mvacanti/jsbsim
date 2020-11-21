@@ -89,6 +89,7 @@ private:
   double TorqueRequired;
   double CurrentRequired;
   double EnginePower;
+  double DeltaTorque;
   void Debug(int from);
 };
 }

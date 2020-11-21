@@ -349,7 +349,7 @@ double FGPropeller::GetPowerRequired(void)
   double local_RPS = RPS < 0.01 ? 0.01 : RPS; 
 
   PowerRequired = cPReq*local_RPS*local_RPS*local_RPS*D5*in.Density;
-  vTorque(eX) = -Sense*PowerRequired / (local_RPS*2.0*M_PI);
+  vTorque(eX) = (-Sense*PowerRequired / (local_RPS*2.0*M_PI)) * 2.53;
 
   return PowerRequired;
 }

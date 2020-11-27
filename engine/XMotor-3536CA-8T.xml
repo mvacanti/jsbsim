@@ -4,7 +4,7 @@
   Author:   Matt Vacanti
 -->
 
-<!--
+<!--Validation Configuration 1
 <bldc_engine name="XMotor-3536CA-8T">
  <velocityconstant> 990 </velocityconstant>
  <torqueconstant> 6.1217 </torqueconstant>
@@ -13,6 +13,7 @@
 </bldc_engine>
 -->
 
+<!--Validation Configuration 2 -->
 <bldc_engine name="XMotor-3536CA-8T">
  <velocityconstant> 990 </velocityconstant>
  <torqueconstant> 6.1217 </torqueconstant>

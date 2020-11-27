@@ -3,7 +3,7 @@
   File:     APCBldc.xml
   Author:   Matt Vacanti
 -->
-<!--
+<!-- Validation Configuration 1
 <bldc_engine name="E-max-BL2205">
  <velocityconstant> 1880 </velocityconstant>
  <torqueconstant> 6.1217 </torqueconstant>
@@ -12,6 +12,7 @@
 </bldc_engine>
 -->
 
+<!-- Validation Configuration 2 -->
 <bldc_engine name="E-max-BL2205">
  <velocityconstant> 1880 </velocityconstant>
  <torqueconstant> 6.1217 </torqueconstant>

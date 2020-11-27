@@ -1,16 +1,27 @@
 <?xml version="1.0"?>
 <!--
-  File:     APCBldc.xml
+  File:     DJI-3510-380.xml
   Author:   Matt Vacanti
 -->
+<!--Hexacopter Flight Configuration
 <bldc_engine name="DJI-3510-380">
  <velocityconstant> 380 </velocityconstant>
  <torqueconstant> 6.1217 </torqueconstant>
- <maxcurrent> 15 </maxcurrent>
- <maxvolts> 15.7895 </maxvolts>
+ <maxcurrent> 31.80 </maxcurrent>
+ <maxvolts> 21 </maxvolts>
 </bldc_engine>
+-->
 
-<!--
+<!--JSB vs APC Configuration
+<bldc_engine name="DJI-3510-380">
+ <velocityconstant> 380 </velocityconstant>
+ <torqueconstant> 6.1217 </torqueconstant>
+ <maxcurrent> 50 </maxcurrent>
+ <maxvolts> 21.0526 </maxvolts>
+</bldc_engine>
+-->
+
+<!-- Validation Config 1
 <bldc_engine name="DJI-3510-380">
  <velocityconstant> 380 </velocityconstant>
  <torqueconstant> 6.1217 </torqueconstant>
@@ -19,11 +30,10 @@
 </bldc_engine>
 -->
 
-<!--
+<!-- Validation Config 2 -->
 <bldc_engine name="DJI-3510-380">
  <velocityconstant> 380 </velocityconstant>
  <torqueconstant> 6.1217 </torqueconstant>
  <maxcurrent> 8.24 </maxcurrent>
  <maxvolts> 14.63 </maxvolts>
 </bldc_engine>
--->

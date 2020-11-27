@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <propeller name="Simulated APC 13x8 6K">
-  <ixx> 0.000207 </ixx>
+  <ixx> 0.000397 </ixx>
   <diameter unit="IN"> 13 </diameter>
   <numblades> 2   </numblades>
   <minpitch> 8.0 </minpitch>

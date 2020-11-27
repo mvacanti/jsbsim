@@ -99,7 +99,7 @@
   </ground_reactions>
   <!-- the front and rear motors spin clockwise, and the left and right motors spin counter-clockwise. -->
   <propulsion>
-    <engine file="electric_APC" name="PX4_1">
+    <engine file="electric_eqv" name="PX4_1">
       <location unit="M">
         <x>   0.0 </x>
         <y>   0.0 </y>
@@ -111,7 +111,7 @@
         <yaw>    0.00 </yaw>
       </orient>
       <feed>0</feed>
-      <thruster file="APC_13x8E_6K">
+      <thruster file="APC_13x8E_8K">
         <location unit="M">
           <x>   0.0 </x>
           <y>   0.0 </y>
@@ -163,6 +163,8 @@
   <output name="prop_perf.csv" type="CSV" rate="250">
   	<property>propulsion/engine/propeller-rpm</property>
   	<property>propulsion/engine[0]/thrust-lbs</property>
-  	<forces>ON</forces>
+	<property>propulsion/engine[0]/prop_torque_ftlbs</property>
+	<property>propulsion/engine/power-hp</property>
+
   </output>
 </fdm_config>

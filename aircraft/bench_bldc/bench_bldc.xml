@@ -99,6 +99,107 @@
   </ground_reactions>
   <!-- the front and rear motors spin clockwise, and the left and right motors spin counter-clockwise. -->
   <propulsion>
+    <!-- Validation Config 1 & 2
+    <engine file="XMotor-3536CA-8T" name="PX4_1">
+      <location unit="M">
+        <x>   0.0 </x>
+        <y>   0.0 </y>
+        <z>   0.0 </z>
+      </location>
+      <orient unit="DEG">
+        <pitch>  0.00 </pitch>
+        <roll>   0.00 </roll>
+        <yaw>    0.00 </yaw>
+      </orient>
+      <feed>0</feed>
+      <thruster file="APC_11x55E_8K">
+        <location unit="M">
+          <x>   0.0 </x>
+          <y>   0.0 </y>
+          <z>   0.0 </z>
+        </location>
+        <orient unit="DEG">
+          <pitch> 0.00 </pitch>
+          <roll>  0.00 </roll>
+          <yaw>   0.00 </yaw>
+        </orient>
+    -->
+    <!-- Validation Config 3 & 4
+    <engine file="EP-2814-900.xml" name="PX4_1">
+      <location unit="M">
+        <x>   0.0 </x>
+        <y>   0.0 </y>
+        <z>   0.0 </z>
+      </location>
+      <orient unit="DEG">
+        <pitch>  0.00 </pitch>
+        <roll>   0.00 </roll>
+        <yaw>    0.00 </yaw>
+      </orient>
+      <feed>0</feed>
+      <thruster file="APC_13x8E_6K">
+        <location unit="M">
+          <x>   0.0 </x>
+          <y>   0.0 </y>
+          <z>   0.0 </z>
+        </location>
+        <orient unit="DEG">
+          <pitch> 0.00 </pitch>
+          <roll>  0.00 </roll>
+          <yaw>   0.00 </yaw>
+        </orient>
+    -->
+    <!-- Validation Config 5 & 6
+    <engine file="E-max-BL2210" name="PX4_1">
+      <location unit="M">
+        <x>   0.0 </x>
+        <y>   0.0 </y>
+        <z>   0.0 </z>
+      </location>
+      <orient unit="DEG">
+        <pitch>  0.00 </pitch>
+        <roll>   0.00 </roll>
+        <yaw>    0.00 </yaw>
+      </orient>
+      <feed>0</feed>
+      <thruster file="APC_7x5E_11K">
+        <location unit="M">
+          <x>   0.0 </x>
+          <y>   0.0 </y>
+          <z>   0.0 </z>
+        </location>
+        <orient unit="DEG">
+          <pitch> 0.00 </pitch>
+          <roll>  0.00 </roll>
+          <yaw>   0.00 </yaw>
+        </orient>
+    -->
+    <!-- Validation Config 7 & 8
+    <engine file="E-max-BL2205" name="PX4_1">
+      <location unit="M">
+        <x>   0.0 </x>
+        <y>   0.0 </y>
+        <z>   0.0 </z>
+      </location>
+      <orient unit="DEG">
+        <pitch>  0.00 </pitch>
+        <roll>   0.00 </roll>
+        <yaw>    0.00 </yaw>
+      </orient>
+      <feed>0</feed>
+      <thruster file="APC_6x4E_14K">
+        <location unit="M">
+          <x>   0.0 </x>
+          <y>   0.0 </y>
+          <z>   0.0 </z>
+        </location>
+        <orient unit="DEG">
+          <pitch> 0.00 </pitch>
+          <roll>  0.00 </roll>
+          <yaw>   0.00 </yaw>
+        </orient>
+    -->
+    <!-- Validation Config 9 & 10 -->
     <engine file="DJI-3510-380" name="PX4_1">
       <location unit="M">
         <x>   0.0 </x>
@@ -122,8 +223,33 @@
           <roll>  0.00 </roll>
           <yaw>   0.00 </yaw>
         </orient>
-        <!--<sense> -1 </sense>-->
-        <!--<p_factor> 10 </p_factor>-->
+
+    <!-- BLDC Ramp Config
+    <engine file="DJI-3510-380" name="PX4_1">
+      <location unit="M">
+        <x>   0.0 </x>
+        <y>   0.0 </y>
+        <z>   0.0 </z>
+      </location>
+      <orient unit="DEG">
+        <pitch>  0.00 </pitch>
+        <roll>   0.00 </roll>
+        <yaw>    0.00 </yaw>
+      </orient>
+      <feed>0</feed>
+      <thruster file="APC_13x8E_6K">
+        <location unit="M">
+          <x>   0.0 </x>
+          <y>   0.0 </y>
+          <z>   0.0 </z>
+        </location>
+        <orient unit="DEG">
+          <pitch> 0.00 </pitch>
+          <roll>  0.00 </roll>
+          <yaw>   0.00 </yaw>
+        </orient>
+      -->
+
       </thruster>
     </engine>
     <tank type="FUEL" number="0">
@@ -163,6 +289,8 @@
   <output name="prop_perf.csv" type="CSV" rate="250">
   	<property>propulsion/engine/propeller-rpm</property>
   	<property>propulsion/engine[0]/thrust-lbs</property>
-  	<forces>ON</forces>
+	<property>propulsion/engine[0]/prop_torque_ftlbs</property>
+	<property>propulsion/engine/power-hp</property>
+
   </output>
 </fdm_config>

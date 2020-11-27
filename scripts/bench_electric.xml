@@ -13,19 +13,11 @@
 		   trimming is completed.
 	</description>
 	<notify>
-	<property>position/h-agl-ft</property>
-	<property>velocities/mach</property>  
+
 	<property>propulsion/engine[0]/thrust-lbs</property>
-	<property>velocities/vc-kts</property>
-	<property>velocities/vc-fps</property>
-	<property>velocities/vt-fps</property>
-	<property>attitude/theta-rad</property>
-	<property>aero/alpha-deg</property>
+	<property>propulsion/engine[0]/prop_torque_ftlbs</property>
 	<property>propulsion/engine/propeller-rpm</property>
 	<property>propulsion/engine/power-hp</property>
-	<property>forces/fbx-total-lbs</property>
-    	<property>forces/fby-total-lbs</property>
-    	<property>forces/fbz-total-lbs</property>
  
 	</notify>
 	<condition> simulation/sim-time-sec >= simulation/notify-time-trigger </condition>

@@ -75,7 +75,7 @@ FGPropeller::FGPropeller(FGFDMExec* exec, Element* prop_element, int num)
   Vinduced = 0.0;
 
   if (prop_element->FindElement("ixx"))
-    Ixx = max(prop_element->FindElementValueAsNumberConvertTo("ixx", "SLUG*FT2"), 0.001);
+    Ixx = max(prop_element->FindElementValueAsNumberConvertTo("ixx", "SLUG*FT2"), 1e-06);
 
   Sense_multiplier = 1.0;
   if (prop_element->HasAttribute("version")
@@ -100,6 +100,13 @@ FGPropeller::FGPropeller(FGFDMExec* exec, Element* prop_element, int num)
     }
   if (prop_element->FindElement("constspeed"))
     ConstantSpeed = (int)prop_element->FindElementValueAsNumber("constspeed");
+
+  if (prop_element->FindElement("torqueleverarm")){
+    TorqueLeverArm = prop_element->FindElementValueAsNumber("torqueleverarm");
+  } else {
+    TorqueLeverArm = 1.0;
+  }
+
   if (prop_element->FindElement("reversepitch"))
     ReversePitch = prop_element->FindElementValueAsNumber("reversepitch");
   while((table_element = prop_element->FindNextElement("table")) != 0) {
@@ -168,6 +175,8 @@ FGPropeller::FGPropeller(FGFDMExec* exec, Element* prop_element, int num)
   property_name = base_property_name + "/prop-induced-velocity_fps";
   PropertyManager->Tie( property_name.c_str(), this, &FGPropeller::GetInducedVelocity,
                       &FGPropeller::SetInducedVelocity );
+  property_name = base_property_name + "/prop_torque_ftlbs";
+  PropertyManager->Tie( property_name.c_str(), this, &FGPropeller::GetTorque );
 
   Debug(0);
 }
@@ -273,7 +282,7 @@ double FGPropeller::Calculate(double EnginePower)
   // natural axis of the engine. The transform takes place in the base class
   // FGForce::GetBodyForces() function.
 
-  FGColumnVector3 vH(Ixx*omega*Sense*Sense_multiplier, 0.0, 0.0);
+  FGColumnVector3 vH(Ixx*omega*Sense*Sense_multiplier*TorqueLeverArm, 0.0, 0.0);
 
   if (omega > 0.0) ExcessTorque = PowerAvailable / omega;
   else             ExcessTorque = PowerAvailable / 1.0;
@@ -354,7 +363,7 @@ double FGPropeller::GetPowerRequired(void)
   double local_RPS = RPS < 0.01 ? 0.01 : RPS; 
 
   PowerRequired = cPReq*local_RPS*local_RPS*local_RPS*D5*in.Density;
-  vTorque(eX) = -Sense*PowerRequired / (local_RPS*2.0*M_PI);
+  vTorque(eX) = (-Sense*PowerRequired / (local_RPS*2.0*M_PI)) * TorqueLeverArm;
 
   return PowerRequired;
 }

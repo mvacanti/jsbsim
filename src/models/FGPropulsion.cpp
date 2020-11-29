@@ -53,6 +53,7 @@ INCLUDES
 #include "models/propulsion/FGTurbine.h"
 #include "models/propulsion/FGPiston.h"
 #include "models/propulsion/FGElectric.h"
+#include "models/propulsion/FGBldc.h"
 #include "models/propulsion/FGTurboProp.h"
 #include "models/propulsion/FGTank.h"
 #include "input_output/FGModelLoader.h"
@@ -84,6 +85,7 @@ FGPropulsion::FGPropulsion(FGFDMExec* exec) : FGModel(exec)
   HaveTurbineEngine =
   HaveRocketEngine =
   HaveTurboPropEngine =
+  HaveBldcEngine =
   HaveElectricEngine = false;
 
   Debug(0);
@@ -421,6 +423,12 @@ bool FGPropulsion::Load(Element* el)
         if (!IsBound) bind();
         Element *element = engine_element->FindElement("electric_engine");
         Engines.push_back(new FGElectric(FDMExec, element, numEngines, in));
+      } else if (engine_element->FindElement("bldc_engine")) {
+        HaveBldcEngine = true;
+        if (!IsBound) bind();
+        Element *element = engine_element->FindElement("bldc_engine");
+        Engines.push_back(new FGBldc(FDMExec, element, numEngines, in));
+
       } else {
         cerr << engine_element->ReadFrom() << " Unknown engine type" << endl;
         return false;

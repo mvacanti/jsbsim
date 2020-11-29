@@ -216,6 +216,7 @@ private:
   bool HaveTurboPropEngine;
   bool HaveRocketEngine;
   bool HaveElectricEngine;
+  bool HaveBldcEngine;
   void ConsumeFuel(FGEngine* engine);
 
   bool ReadingEngine;

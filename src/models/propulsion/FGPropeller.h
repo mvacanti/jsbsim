@@ -340,6 +340,7 @@ private:
   bool   Reversed;     // true, when propeller is reversed
   double Reverse_coef; // 0 - 1 defines AdvancePitch (0=MIN_PITCH 1=REVERSE_PITCH)
   bool   Feathered;    // true, if feather command
+  double TorqueLeverArm;
 };
 }
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

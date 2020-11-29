@@ -17,7 +17,7 @@ configurations to replicate the results. The analysis will investigate the follo
 ## Baseline Configuration
 Configuration | Setting
 ------        | :------:
-Environment   | [px4_jsbsim_docker]()
+Environment   | [px4_jsbsim_docker](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/px4_jsbsim_docker/Dockerfile)
 PX4           | https://github.com/PX4/PX4-Autopilot.git
 -- Branch     | master 
 -- Revision   | 5d7ea62190bf6b64263fb53d3b1515bb0757a44b
@@ -31,7 +31,7 @@ JSBSim Bridge | https://github.com/mvacanti/px4-jsbsim-bridge.git
 -- Engine     | [electric_eqv](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/electric_eqv.xml)
 -- Propeller  | [APC_13x8E_8K](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/APC_13x8E_8K.xml)
 -- Torque     | [Baseline](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/APC_13x8E_8K.xml#L8-L9)
-Flight Plan   | [bldc_validation.plan]()
+Flight Plan   | [bldc_validation.plan](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/doc/suas_bldc/bldc_validation.plan)
 
 ## Baseline Test Outcome
 Plotting the PX4 actuator output (PWM where 1000 = 0% and 2000 = 100%) and acceleration outputs from PX4 via 
@@ -414,7 +414,7 @@ the stability of the aircraft is substantially improved and successfully complet
 
 Configuration | Setting
 ------        | :------:
-Environment   | [px4_jsbsim_docker]()
+Environment   | [px4_jsbsim_docker](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/px4_jsbsim_docker/Dockerfile)
 PX4           | https://github.com/PX4/PX4-Autopilot.git
 -- Branch     | master 
 -- Revision   | 5d7ea62190bf6b64263fb53d3b1515bb0757a44b
@@ -428,7 +428,7 @@ JSBSim Bridge | https://github.com/mvacanti/px4-jsbsim-bridge.git
 -- Engine     | [DJI-3510-380](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/DJI-3510-380.xml)
 -- Propeller  | [APC_13x8E_8K](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/APC_13x8E_8K.xml)
 -- Torque     | [Final Configuration](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/APC_13x8E_8K.xml#L10)
-Flight Plan   | [bldc_validation.plan]()
+Flight Plan   | [bldc_validation.plan](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/doc/suas_bldc/bldc_validation.plan)
 
 ![Baseline Flight Outcome](doc/suas_bldc/combined_flight.png)
 

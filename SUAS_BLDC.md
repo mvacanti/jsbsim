@@ -9,10 +9,10 @@ cases but introduces undesirable characteristics when applied to small (<55 lbs)
 This analysis explores contributing factors, makes recommendations, and provides test 
 configurations to replicate the results. The analysis will investigate the following areas: 
 
-- Propeller Moment of Inertia
-- Propeller Performance Characteristics
-- Propeller and Engine Torque
-- Propeller Torque Application
+- ![Propeller Moment of Inertia](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/SUAS_BLDC.md#propeller-moment-of-inertia-ixx)
+- ![Propeller Performance Characteristics](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/SUAS_BLDC.md#propeller-performance-characteristics)
+- ![Propeller and Engine Torque](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/SUAS_BLDC.md#propeller-and-engine-torque)
+- ![Propeller Torque Application](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/SUAS_BLDC.md#propeller-torque-application)
 
 ## Baseline Configuration
 Configuration | Setting

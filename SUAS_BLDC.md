@@ -425,7 +425,7 @@ JSBSim Bridge | https://github.com/mvacanti/px4-jsbsim-bridge.git
 -- Engine     | [DJI-3510-380](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/DJI-3510-380.xml)
 -- Propeller  | [APC_13x8E_8K](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/APC_13x8E_8K.xml)
 -- Torque     | [Baseline](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/APC_13x8E_8K.xml#L8-L9)
-Flight Plan   | [yaw_test.plan]()
+Flight Plan   | [yaw_test.plan](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/doc/suas_bldc/yaw_test.plan)
 
 The results of completing the flight plan above (climb to altitude then yaw to a heading) creates a .csv file that 
 includes the following data:
@@ -439,12 +439,12 @@ Given BOUABDALLAH, MURRIERI, and SIEGWART (p. 175 (5)) we would expect that the 
 center of gravity (C.G.). In the case of the hexarotor_x this distance is 2.53 Ft or 
 [0.772M.](https://github.com/mvacanti/px4-jsbsim-bridge/blob/e89153756262de9edc31040b843c4e859d89b301/models/hexarotor_x/hexarotor_x.xml#L113)
 
-Plotting the .csv file generate by JSBSim for this flight we observe that the Total N moment is equal to the sum of the 
-total propeller torque indicating that the distance of the propeller to the C.G. is not being applied.
+[Plotting](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/doc/suas_bldc/torque_validation_plots.py) file generate by JSBSim for this 
+flight we observe that the Total N moment is equal to the sum of the total propeller torque indicating that the distance of the propeller to the C.G. is 
+not being applied.
 
 ![Baseline Flight Outcome](doc/suas_bldc/yaw_test.png)
 
- 
 
 ## Combined Solution Outcome
 By combining a reasonable estimate of prop Ixx, a new BLDC motor model, and application of torque on the airframe,

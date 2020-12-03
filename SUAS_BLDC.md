@@ -408,6 +408,44 @@ prop (lever arm) as described by BOUABDALLAH, MURRIERI, and SIEGWART
 This has been resolved by a simple modification for this proof of concept
 [here.](https://github.com/mvacanti/jsbsim/blob/fb7de0a093f0c9da084bd97229d15e013ca0a6bd/src/models/propulsion/FGPropeller.cpp#L366)
 
+### Demonstration of JSBSim Torque Application vs. Expected
+Configuration | Setting
+------        | :------:
+Environment   | [px4_jsbsim_docker](https://github.com/mvacanti/jsbsim/blob/pr-bldc-validation/px4_jsbsim_docker/Dockerfile)
+PX4           | https://github.com/PX4/PX4-Autopilot.git
+-- Branch     | master 
+-- Revision   | 5d7ea62190bf6b64263fb53d3b1515bb0757a44b
+JSBSim        | https://github.com/mvacanti/jsbsim.git
+-- Branch     | pr-bldc-validation 
+-- Revision   | fb7de0a093f0c9da084bd97229d15e013ca0a6bd
+JSBSim Bridge | https://github.com/mvacanti/px4-jsbsim-bridge.git
+-- Branch     | pr-jsbsim-bldc 
+-- Revision   | e89153756262de9edc31040b843c4e859d89b301
+-- Aircraft   | [hexarotor_x](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/hexarotor_x.xml)
+-- Engine     | [DJI-3510-380](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/DJI-3510-380.xml)
+-- Propeller  | [APC_13x8E_8K](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/APC_13x8E_8K.xml)
+-- Torque     | [Baseline](https://github.com/mvacanti/px4-jsbsim-bridge/blob/c68c9ec704c5d8d232160828e39d766028227337/models/hexarotor_x/Engines/APC_13x8E_8K.xml#L8-L9)
+Flight Plan   | [yaw_test.plan]()
+
+The results of completing the flight plan above (climb to altitude then yaw to a heading) creates a .csv file that 
+includes the following data:
+- JSBSim standard Moments
+- JSBSim standard Forces
+- Torque produced by the propeller 
+[here.](https://github.com/mvacanti/jsbsim/blob/ec9b7da0e4aa0d425e366b51f851df14a69461ed/src/models/propulsion/FGPropeller.h#L263)
+
+Given BOUABDALLAH, MURRIERI, and SIEGWART (p. 175 (5)) we would expect that the Total N moment calculated by JSBSim
+(absent other external forces) to equal the sum all propeller torque multiplied by the distance of the propeller to the 
+center of gravity (C.G.). In the case of the hexarotor_x this distance is 2.53 Ft or 
+[0.772M.](https://github.com/mvacanti/px4-jsbsim-bridge/blob/e89153756262de9edc31040b843c4e859d89b301/models/hexarotor_x/hexarotor_x.xml#L113)
+
+Plotting the .csv file generate by JSBSim for this flight we observe that the Total N moment is equal to the sum of the 
+total propeller torque indicating that the distance of the propeller to the C.G. is not being applied.
+
+![Baseline Flight Outcome](doc/suas_bldc/yaw_test.png)
+
+ 
+
 ## Combined Solution Outcome
 By combining a reasonable estimate of prop Ixx, a new BLDC motor model, and application of torque on the airframe,
 the stability of the aircraft is substantially improved and successfully completes the entire flight plan.
